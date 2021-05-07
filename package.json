@@ -1,12 +1,12 @@
 {
-  "name": "cpn-table",
-  "version": "0.1.0",
-  "private": true,
+  "name": "cpn-tbl",
+  "version": "0.1.3",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib ./src/TBL/index.js",
     "lint": "vue-cli-service lint"
   },
+  "main": "./dist/cpn-tbl.umd.min.js",
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
