@@ -89,7 +89,11 @@ export default {
                 style: { width: col.width + 'px' },
                 attrs: { rowspan, colspan },
               },
-              col.scopedSlot ? col.scopedSlot({ row }) : row[col.property]
+              col.scopedSlot
+                ? typeof col.scopedSlot === 'function'
+                  ? col.scopedSlot({ row })
+                  : col.scopedSlot // 没有填 slot-scope 但也不是嵌套表头
+                : row[col.property]
             )
           })}
         </tr>

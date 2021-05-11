@@ -19,6 +19,7 @@ npm i cpn-tbl -S
 
 ```javascript
 import Tbl from 'cpn-tbl'
+import 'cpn-tbl/dist/cpn-tbl.css'
 Vue.use(Tbl)
 ```
 

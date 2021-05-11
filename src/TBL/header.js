@@ -1,3 +1,10 @@
+function isCol(slot) {
+  return (
+    slot &&
+    slot[0].componentOptions &&
+    slot[0].componentOptions.tag === 'tbl-col'
+  )
+}
 export default {
   props: {
     column: Array,
@@ -15,7 +22,7 @@ export default {
       handler() {
         if (!this.column) return
         let stamp = this.column
-          .map(i => {
+          .map((i) => {
             if (!i.componentInstance) return ''
             return i.componentInstance._uid
           })
@@ -36,9 +43,7 @@ export default {
             if (!ins) return
             let colspan = 1
             let hadChild = false
-            // assume $slots.default are all <tbl-col>
-            // it means that custom slot should be a scoped slot even if it doesn't use scoped variable
-            if (ins.$slots.default) {
+            if (isCol(ins.$slots.default)) {
               colspan = traverse(ins.$slots.default, level + 1)
               hadChild = true
             } else {
@@ -48,7 +53,9 @@ export default {
                 width: ins.width,
                 slot: ins.$slots.default, // static
                 scopedSlot: ins.$slots.default
-                  ? null
+                  ? isCol(ins.$slots.default)
+                    ? null
+                    : ins.$slots.default // 没有填 slot-scope 但也不是嵌套表头
                   : ins.$scopedSlots.default, // scoped
                 instance: ins,
               })
@@ -78,7 +85,7 @@ export default {
         {toBeRender.map((row, level) => {
           return (
             <tr>
-              {row.map(col => {
+              {row.map((col) => {
                 return (
                   <th
                     colspan={col.colspan}

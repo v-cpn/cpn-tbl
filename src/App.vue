@@ -1,5 +1,19 @@
 <template>
   <div id="app">
+    <h2>自定义列模板</h2>
+    <tbl :data="tableData0" style="width: 100%">
+      <tbl-col prop="date" label="日期" width="150"> </tbl-col>
+      <tbl-col label="操作1">
+        <template>
+          <button>操作1</button>
+        </template>
+      </tbl-col>
+      <tbl-col label="操作2">
+        <template slot-scope="scope">
+          <button>操作1{{ scope.row.date }}</button>
+        </template>
+      </tbl-col>
+    </tbl>
     <h2>多级表头</h2>
     <tbl :data="tableData0" style="width: 100%">
       <tbl-col prop="date" label="日期" width="150"> </tbl-col>

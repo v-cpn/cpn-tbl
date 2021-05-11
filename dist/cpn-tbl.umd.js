@@ -1807,6 +1807,11 @@ var es_array_join = __webpack_require__("a15b");
 // CONCATENATED MODULE: ./src/TBL/header.js
 
 
+
+function isCol(slot) {
+  return slot && slot[0].componentOptions && slot[0].componentOptions.tag === 'tbl-col';
+}
+
 /* harmony default export */ var header = ({
   props: {
     column: Array,
@@ -1845,10 +1850,9 @@ var es_array_join = __webpack_require__("a15b");
             var ins = vnodes[i].componentInstance;
             if (!ins) return;
             var colspan = 1;
-            var hadChild = false; // assume $slots.default are all <tbl-col>
-            // it means that custom slot should be a scoped slot even if it doesn't use scoped variable
+            var hadChild = false;
 
-            if (ins.$slots.default) {
+            if (isCol(ins.$slots.default)) {
               colspan = traverse(ins.$slots.default, level + 1);
               hadChild = true;
             } else {
@@ -1858,7 +1862,8 @@ var es_array_join = __webpack_require__("a15b");
                 width: ins.width,
                 slot: ins.$slots.default,
                 // static
-                scopedSlot: ins.$slots.default ? null : ins.$scopedSlots.default,
+                scopedSlot: ins.$slots.default ? isCol(ins.$slots.default) ? null : ins.$slots.default // 没有填 slot-scope 但也不是嵌套表头
+                : ins.$scopedSlots.default,
                 // scoped
                 instance: ins
               });
@@ -2013,9 +2018,10 @@ var es_array_join = __webpack_require__("a15b");
             rowspan: rowspan,
             colspan: colspan
           }
-        }, col.scopedSlot ? col.scopedSlot({
+        }, col.scopedSlot ? typeof col.scopedSlot === 'function' ? col.scopedSlot({
           row: row
-        }) : row[col.property]);
+        }) : col.scopedSlot // 没有填 slot-scope 但也不是嵌套表头
+        : row[col.property]);
       })]);
     });
     return h("div", {
