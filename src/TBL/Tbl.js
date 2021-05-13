@@ -30,9 +30,9 @@ export default {
   mounted() {
     this.originCol = this.$slots.default
   },
-  // beforeUpdate() {
-  //   console.log('beforeUpdate')
-  // },
+  beforeUpdate() {
+    this.originCol = this.$slots.default
+  },
   // updated() {
   //   console.log('updated')
   // },
@@ -109,7 +109,7 @@ export default {
         >
           {/* must render it then you can get the col instance */}
           {this.$slots.default}
-          <tbl-header column={this.originCol} />
+          <TblHeader column={this.originCol} />
           <tbody>
             {data.length === 0 ? (
               <tr>

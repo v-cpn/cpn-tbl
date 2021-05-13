@@ -1,5 +1,6 @@
 import Tbl from './Tbl'
 import TblCol from './TblCol'
+import './tbl.css'
 
 export default {
   install(Vue) {

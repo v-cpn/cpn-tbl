@@ -27,6 +27,7 @@ export default {
             return i.componentInstance._uid
           })
           .join('')
+        // 防止重复更新
         if (this.columnStamp === stamp) {
           return
         } else {
@@ -40,7 +41,7 @@ export default {
           if (!toBeRender[level]) toBeRender[level] = []
           for (let i = 0; i < vnodes.length; i++) {
             let ins = vnodes[i].componentInstance
-            if (!ins) return
+            if (!ins) continue
             let colspan = 1
             let hadChild = false
             if (isCol(ins.$slots.default)) {

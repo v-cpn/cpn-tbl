@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <h2>自定义列模板</h2>
+    {{toggle}}
     <tbl :data="tableData0" style="width: 100%">
       <tbl-col prop="date" label="日期" width="150"> </tbl-col>
-      <tbl-col label="操作1">
+      <tbl-col v-if="toggle" label="操作1">
         <template>
-          <button>操作1</button>
+          <button @click="toggle = false">操作1</button>
         </template>
       </tbl-col>
       <tbl-col label="操作2">
@@ -84,6 +85,7 @@ export default {
   name: 'App',
   data() {
     return {
+      toggle: true,
       tableData0: [
         {
           date: '2016-05-03',

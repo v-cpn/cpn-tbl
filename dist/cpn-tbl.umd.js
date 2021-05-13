@@ -1831,7 +1831,7 @@ function isCol(slot) {
         var stamp = this.column.map(function (i) {
           if (!i.componentInstance) return '';
           return i.componentInstance._uid;
-        }).join('');
+        }).join(''); // 防止重复更新
 
         if (this.columnStamp === stamp) {
           return;
@@ -1848,7 +1848,7 @@ function isCol(slot) {
 
           for (var i = 0; i < vnodes.length; i++) {
             var ins = vnodes[i].componentInstance;
-            if (!ins) return;
+            if (!ins) continue;
             var colspan = 1;
             var hadChild = false;
 
@@ -1941,9 +1941,9 @@ function isCol(slot) {
   mounted: function mounted() {
     this.originCol = this.$slots.default;
   },
-  // beforeUpdate() {
-  //   console.log('beforeUpdate')
-  // },
+  beforeUpdate: function beforeUpdate() {
+    this.originCol = this.$slots.default;
+  },
   // updated() {
   //   console.log('updated')
   // },
@@ -2031,7 +2031,7 @@ function isCol(slot) {
         width: '100%'
       },
       "class": border ? 'border' : ''
-    }, [this.$slots.default, h("tbl-header", {
+    }, [this.$slots.default, h(header, {
       "attrs": {
         "column": this.originCol
       }

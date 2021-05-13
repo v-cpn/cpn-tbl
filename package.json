@@ -1,6 +1,6 @@
 {
   "name": "cpn-tbl",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib ./src/TBL/index.js",
@@ -21,6 +21,7 @@
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
+    "ignorePatterns": ["**/dist/*.js"],
     "root": true,
     "env": {
       "node": true
